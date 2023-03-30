@@ -13,8 +13,13 @@ public class Main {
         agregarEstudiante(estudiantes,1);
         agregarEstudiante(estudiantes,2);
         agregarEstudiante(estudiantes,3);
-        imprimir(estudiantes);
+        estadoEstudiantes(estudiantes);
+        estudiantesAprobados(estudiantes);
+        estudiantesReprobados(estudiantes);
+        estudiantesEnExamen(estudiantes);
     }
+
+
 
     public static double[] generarNotas(){
         Random rm = new Random();
@@ -29,18 +34,20 @@ public class Main {
         estudiantes[indice] = generarNotas();
     }
 
-    public static void imprimir(double[][] estudiantes){
+    public static void estadoEstudiantes(double[][] estudiantes){
         for (int i = 0; i < estudiantes.length; i++) {
+            System.out.print("Estudiante nro "+i+":");
             for (int j = 0; j < estudiantes[i].length; j++) {
                 System.out.print("["+estudiantes[i][j]+"]");
             }
+            System.out.print(" Promedio: "+calcularPromedio(estudiantes[i]));
             System.out.println();
         }
     }
-
-    public static int calcularAprobacion(double[] notas){
-
-        double promedio = notas[0]*0.25+notas[1]*0.25+notas[2]*0.25+notas[3]*0.15+notas[4]*0.10;
+    public static double calcularPromedio(double[] notas){
+        return notas[0]*0.25+notas[1]*0.25+notas[2]*0.25+notas[3]*0.15+notas[4]*0.10;
+    }
+    public static int calcularAprobacion(double promedio){
 
         if(promedio>=4.0){
             return 1;
@@ -53,7 +60,7 @@ public class Main {
     public static void estudiantesAprobados(double[][] estudiantes){
         int aprobados = 0;
         for (int i = 0; i < estudiantes.length; i++) {
-            if (calcularAprobacion(estudiantes[i])==1){
+            if (calcularAprobacion(calcularPromedio(estudiantes[i]))==1){
                 aprobados++;
             }
         }
@@ -63,7 +70,7 @@ public class Main {
     public static void estudiantesEnExamen(double[][] estudiantes){
         int examen = 0;
         for (int i = 0; i < estudiantes.length; i++) {
-            if (calcularAprobacion(estudiantes[i])==2){
+            if (calcularAprobacion(calcularPromedio(estudiantes[i]))==2){
                 examen++;
             }
         }
@@ -73,7 +80,7 @@ public class Main {
     public static void estudiantesReprobados(double[][] estudiantes){
         int reprobados = 0;
         for (int i = 0; i < estudiantes.length; i++) {
-            if (calcularAprobacion(estudiantes[i])==0){
+            if (calcularAprobacion(calcularPromedio(estudiantes[i]))==0){
                 reprobados++;
             }
         }
